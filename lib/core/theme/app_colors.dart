@@ -11,10 +11,20 @@ class AppColors {
   static const Color darkSurface = Color(0xFF12121F);
   static const Color darkCard = Color(0xFF1A1A2E);
 
-  // Text
-  static const Color textHigh = Colors.white;
-  static const Color textMid = Color(0xFFA0A0C0);
-  static const Color textLow = Color(0xFF606080);
+  // Light theme
+  static const Color lightBg = Color(0xFFF5F5FA);
+  static const Color lightSurface = Color(0xFFFFFFFF);
+  static const Color lightCard = Color(0xFFF8F8FC);
+
+  // Text - Dark theme
+  static const Color textHighDark = Colors.white;
+  static const Color textMidDark = Color(0xFFA0A0C0);
+  static const Color textLowDark = Color(0xFF606080);
+
+  // Text - Light theme
+  static const Color textHighLight = Color(0xFF1A1A2E);
+  static const Color textMidLight = Color(0xFF606080);
+  static const Color textLowLight = Color(0xFF8A8AA0);
 
   // Status
   static const Color success = Color(0xFF00FF9D);

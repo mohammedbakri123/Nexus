@@ -11,7 +11,15 @@ class ThemeProvider extends ChangeNotifier {
   }
 
   ThemeMode get themeMode => _themeMode;
-  bool get isDarkMode => _themeMode == ThemeMode.dark;
+
+  bool get isDarkMode {
+    if (_themeMode == ThemeMode.system) {
+      // This will be resolved by MaterialApp based on system settings
+      // For now, default to dark for system mode
+      return true;
+    }
+    return _themeMode == ThemeMode.dark;
+  }
 
   Future<void> _loadTheme() async {
     final prefs = await SharedPreferences.getInstance();

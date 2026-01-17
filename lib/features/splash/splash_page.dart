@@ -18,7 +18,6 @@ class _SplashPageState extends State<SplashPage>
 
   Timer? _timer;
   double _progress = 0;
-  bool _ready = false;
 
   static const Color accent = Color(0xFF9B5CFF); // same as LOGIN
 
@@ -54,7 +53,12 @@ class _SplashPageState extends State<SplashPage>
         _progress += 0.02;
         if (_progress >= 1) {
           t.cancel();
-          _ready = true;
+          // Automatically navigate after a short delay for smooth transition
+          Timer(const Duration(milliseconds: 300), () {
+            if (mounted) {
+              _goNext();
+            }
+          });
         }
       });
     });
@@ -115,7 +119,7 @@ class _SplashPageState extends State<SplashPage>
           const SizedBox(height: 24),
           _title(),
           const SizedBox(height: 64),
-          _ready ? _enterButton() : _loader(),
+          _loader(),
           const SizedBox(height: 40),
           _version(),
         ],
@@ -132,7 +136,16 @@ class _SplashPageState extends State<SplashPage>
         color: accent.withOpacity(0.15),
         boxShadow: [BoxShadow(color: accent.withOpacity(0.6), blurRadius: 30)],
       ),
-      child: const Icon(Icons.gamepad, color: accent, size: 34),
+      padding: const EdgeInsets.all(12),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Image.asset(
+          'assets/icons/app_icon.png',
+          fit: BoxFit.cover,
+          width: double.infinity,
+          height: double.infinity,
+        ),
+      ),
     );
   }
 
@@ -179,33 +192,6 @@ class _SplashPageState extends State<SplashPage>
           ),
         ),
       ],
-    );
-  }
-
-  Widget _enterButton() {
-    return GestureDetector(
-      onTap: _goNext,
-      child: Container(
-        height: 56,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: accent,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(color: accent.withOpacity(0.6), blurRadius: 30),
-          ],
-        ),
-        child: const Center(
-          child: Text(
-            'ENTER SYSTEM',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.5,
-            ),
-          ),
-        ),
-      ),
     );
   }
 

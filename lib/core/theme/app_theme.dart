@@ -49,12 +49,12 @@ class AppTheme {
         bodyMedium: TextStyle(
           fontFamily: 'Inter',
           fontSize: 14,
-          color: AppColors.textMid,
+          color: AppColors.textMidDark,
         ),
         bodySmall: TextStyle(
           fontFamily: 'Inter',
           fontSize: 12,
-          color: AppColors.textLow,
+          color: AppColors.textLowDark,
         ),
       ),
 
@@ -67,7 +67,7 @@ class AppTheme {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: AppColors.textLow),
+          borderSide: const BorderSide(color: AppColors.textLowDark),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -75,11 +75,11 @@ class AppTheme {
         ),
         labelStyle: const TextStyle(
           fontFamily: 'Inter',
-          color: AppColors.textMid,
+          color: AppColors.textMidDark,
         ),
         hintStyle: const TextStyle(
           fontFamily: 'Inter',
-          color: AppColors.textLow,
+          color: AppColors.textLowDark,
         ),
       ),
 
@@ -124,20 +124,18 @@ class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       brightness: Brightness.light,
-
-      scaffoldBackgroundColor: const Color(0xFF121218), // NOT white
+      scaffoldBackgroundColor: AppColors.lightBg,
       primaryColor: AppColors.primary,
 
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
+        onPrimary: Colors.black,
         secondary: AppColors.secondary,
-
-        background: Color(0xFF121218),
-        surface: Color(0xFF1A1A24),
-
-        onBackground: Colors.white,
-        onSurface: Colors.white,
-
+        onSecondary: Colors.black,
+        background: AppColors.lightBg,
+        onBackground: AppColors.textHighLight,
+        surface: AppColors.lightSurface,
+        onSurface: AppColors.textHighLight,
         error: AppColors.error,
         onError: Colors.white,
       ),
@@ -147,60 +145,97 @@ class AppTheme {
           fontFamily: 'Orbitron',
           fontSize: 48,
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: AppColors.textHighLight,
         ),
         displayMedium: TextStyle(
           fontFamily: 'Orbitron',
           fontSize: 24,
           fontWeight: FontWeight.w500,
-          color: Colors.white,
+          color: AppColors.textHighLight,
         ),
         displaySmall: TextStyle(
           fontFamily: 'Orbitron',
           fontSize: 18,
           fontWeight: FontWeight.w500,
-          color: Colors.white70,
+          color: AppColors.textMidLight,
         ),
         bodyLarge: TextStyle(
           fontFamily: 'Inter',
           fontSize: 16,
-          color: Colors.white,
+          color: AppColors.textHighLight,
         ),
         bodyMedium: TextStyle(
           fontFamily: 'Inter',
           fontSize: 14,
-          color: Color(0xFFB0B0C8),
+          color: AppColors.textMidLight,
         ),
         bodySmall: TextStyle(
           fontFamily: 'Inter',
           fontSize: 12,
-          color: Color(0xFF8A8AA0),
+          color: AppColors.textLowLight,
         ),
       ),
 
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: const Color(0xFF1A1A24),
+        fillColor: AppColors.lightSurface,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: AppColors.textLowLight),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: AppColors.primary),
         ),
+        labelStyle: const TextStyle(
+          fontFamily: 'Inter',
+          color: AppColors.textMidLight,
+        ),
+        hintStyle: const TextStyle(
+          fontFamily: 'Inter',
+          color: AppColors.textLowLight,
+        ),
+      ),
+
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.black,
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          textStyle: const TextStyle(
+            fontFamily: 'Orbitron',
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          side: const BorderSide(color: AppColors.primary),
+          textStyle: const TextStyle(
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       ),
 
       appBarTheme: const AppBarTheme(
-        backgroundColor: Color(0xFF121218),
+        backgroundColor: AppColors.lightSurface,
         elevation: 0,
         titleTextStyle: TextStyle(
           fontFamily: 'Orbitron',
           fontSize: 20,
           fontWeight: FontWeight.w600,
-          color: Colors.white,
+          color: AppColors.textHighLight,
         ),
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: AppColors.textHighLight),
       ),
     );
   }

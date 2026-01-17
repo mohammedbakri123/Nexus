@@ -25,19 +25,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
   }
 
   Future<void> _loadFavorites({bool refresh = false}) async {
-    if (refresh) {
-      setState(() => _isRefreshing = true);
-    } else {
+    if (!refresh) {
       setState(() => _isLoading = true);
     }
 
     final userId = await SessionManager.getUserId();
     if (userId == null) {
       if (mounted) {
-        setState(() {
-          _isLoading = false;
-          _isRefreshing = false;
-        });
+        setState(() => _isLoading = false);
       }
       return;
     }
@@ -49,7 +44,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
         setState(() {
           _favorites = [];
           _isLoading = false;
-          _isRefreshing = false;
         });
       }
       return;
@@ -67,15 +61,11 @@ class _FavoritesPageState extends State<FavoritesPage> {
         setState(() {
           _favorites = games;
           _isLoading = false;
-          _isRefreshing = false;
         });
       }
     } catch (_) {
       if (mounted) {
-        setState(() {
-          _isLoading = false;
-          _isRefreshing = false;
-        });
+        setState(() => _isLoading = false);
       }
     }
   }

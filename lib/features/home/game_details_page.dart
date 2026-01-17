@@ -111,9 +111,7 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
         fit: BoxFit.cover,
         placeholder: (context, url) => Container(
           color: Colors.black87,
-          child: const Center(
-            child: CircularProgressIndicator(),
-          ),
+          child: const Center(child: CircularProgressIndicator()),
         ),
         errorWidget: (context, url, error) => Container(
           color: Colors.black87,
@@ -193,6 +191,13 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
                 game.description,
                 style: const TextStyle(color: Colors.white70, height: 1.5),
               ),
+              if (game.pcRequirements != null &&
+                  game.pcRequirements!.hasRequirements) ...[
+                const SizedBox(height: 24),
+                _sectionTitle('System Requirements'),
+                const SizedBox(height: 12),
+                _requirementsSection(game.pcRequirements!),
+              ],
               const SizedBox(height: 120),
             ],
           ),
@@ -248,12 +253,38 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
   }
 
   Widget _stats(GameModel game) {
+    // Format release date
+    final releaseDate = game.released ?? 'TBA';
+
+    // Format ratings count
+    String ratingsText = 'N/A';
+    if (game.ratingsCount != null && game.ratingsCount! > 0) {
+      if (game.ratingsCount! >= 1000000) {
+        ratingsText = '${(game.ratingsCount! / 1000000).toStringAsFixed(1)}M+';
+      } else if (game.ratingsCount! >= 1000) {
+        ratingsText = '${(game.ratingsCount! / 1000).toStringAsFixed(1)}K+';
+      } else {
+        ratingsText = '${game.ratingsCount}+';
+      }
+    }
+
+    // Format playtime or use metacritic if available
+    String playtimeText = 'N/A';
+    if (game.playtime != null && game.playtime! > 0) {
+      playtimeText = '${game.playtime}h';
+    } else if (game.metacritic != null) {
+      playtimeText = '${game.metacritic}';
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const [
-        _StatItem(label: 'SIZE', value: '85 GB'),
-        _StatItem(label: 'DOWNLOADS', value: '5M+'),
-        _StatItem(label: 'PRICE', value: '\$59.99'),
+      children: [
+        _StatItem(label: 'RELEASED', value: releaseDate),
+        _StatItem(label: 'RATINGS', value: ratingsText),
+        _StatItem(
+          label: game.metacritic != null ? 'METACRITIC' : 'PLAYTIME',
+          value: playtimeText,
+        ),
       ],
     );
   }
@@ -261,15 +292,65 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
   Widget _sectionTitle(String title) {
     return Row(
       children: [
-        Container(
-          width: 4,
-          height: 20,
-          color: const Color(0xFF9B5CFF),
-        ),
+        Container(width: 4, height: 20, color: const Color(0xFF9B5CFF)),
         const SizedBox(width: 8),
         Text(
           title,
           style: const TextStyle(fontFamily: 'Orbitron', fontSize: 18),
+        ),
+      ],
+    );
+  }
+
+  Widget _requirementsSection(GameRequirements requirements) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (requirements.minimum != null) ...[
+            _requirementItem('Minimum', requirements.minimum!),
+            if (requirements.recommended != null) const SizedBox(height: 16),
+          ],
+          if (requirements.recommended != null)
+            _requirementItem('Recommended', requirements.recommended!),
+        ],
+      ),
+    );
+  }
+
+  Widget _requirementItem(String label, String requirements) {
+    // Clean up HTML tags and format text
+    final cleanText = requirements
+        .replaceAll(RegExp(r'<[^>]*>'), '')
+        .replaceAll('&nbsp;', ' ')
+        .replaceAll('&amp;', '&')
+        .trim();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontFamily: 'Orbitron',
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF9B5CFF),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          cleanText,
+          style: const TextStyle(
+            fontSize: 13,
+            color: Colors.white70,
+            height: 1.6,
+          ),
         ),
       ],
     );
