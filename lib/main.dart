@@ -5,7 +5,6 @@ import 'dart:io' show Platform;
 
 // sqflite desktop initialization
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:nexus/features/settings/settings_page.dart';
 import 'package:provider/provider.dart';
 import 'package:nexus/core/theme/app_theme.dart';
 import 'package:nexus/core/providers/theme_provider.dart';
@@ -41,7 +40,6 @@ class MyApp extends StatelessWidget {
             home: const SplashPage(),
             routes: {
               '/auth': (context) => const AuthPage(),
-              '/settings': (context) => const SettingsPage(),
               '/home': (_) => const MainShell(),
 
               // Add other routes
@@ -53,4 +51,4 @@ class MyApp extends StatelessWidget {
   }
 }
 
-const API_KEY = "96a9d6f7f18f49da9d17ea8db9fb33b2";
+// const API_KEY = "96a9d6f7f18f49da9d17ea8db9fb33b2";
